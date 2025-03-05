@@ -4,31 +4,31 @@ import java.util.Scanner;
 
 public class UniversalConvertor {
     public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
         System.out.println("Введите десятичное, двоичное или шестнадцатеричное число для перекодировки:");
         while (true) {
             System.out.println("""
                     Десятичное число должно быть больше 0
                     Двоичное число должно начинаться на 0b (пример: 0b100110)
                     Шестнадцатеричное число должно начинаться на 0x (пример: 0xDF0)""");
-            Scanner scan = new Scanner(System.in);
             if (scan.hasNextInt()) {
                 int decimalNumber = scan.nextInt();
                 if (decimalNumber <= 0) {           // проверяем ввод десятичного числа
                     System.out.println("Число не соответствует условию ввода. Введите еще раз:");
                     continue;
                 }
-                System.out.println("Десятичное число " + decimalNumber + " равно шестнадцатеричному числу " + toDecimalHex(decimalNumber));
-                System.out.println("Десятичное число " + decimalNumber + " равно двоичному числу " + toDecimalBinary(decimalNumber));
+                System.out.println("Десятичное число " + decimalNumber + " равно шестнадцатеричному числу " + toConvertDecimalInHex(decimalNumber));
+                System.out.println("Десятичное число " + decimalNumber + " равно двоичному числу " + toConvertDecimalInBinary(decimalNumber));
                 break;
             }
             String stringNumber = scan.nextLine();
-            if (hexDemTrue(stringNumber)) {   // проверяем ввод шестнадцатеричного числа
-                System.out.println("Шестнадцатеричное число " + stringNumber + " равно десятичному числу " + toHexDecimal(stringNumber));
-                System.out.println("Шестнадцатеричное число " + stringNumber + " равно двоичному числу " + toDecimalBinary(toHexDecimal(stringNumber)));
+            if (isHexadecimalValid (stringNumber)) {   // проверяем ввод шестнадцатеричного числа
+                System.out.println("Шестнадцатеричное число " + stringNumber + " равно десятичному числу " + toConvertHexInDecimal(stringNumber));
+                System.out.println("Шестнадцатеричное число " + stringNumber + " равно двоичному числу " + toConvertDecimalInBinary(toConvertHexInDecimal(stringNumber)));
                 break;
-            } else if (BinaryTrue(stringNumber)) {  // проверяем ввод двоичного числа
-                System.out.println("Двоичное число " + stringNumber + " равно десятичному числу " + toBinaryDecimal(stringNumber));
-                System.out.println("Двоичное число " + stringNumber + " равно шестнадцатеричному числу " + toDecimalHex(toBinaryDecimal(stringNumber)));
+            } else if (isBinaryValid(stringNumber)) {  // проверяем ввод двоичного числа
+                System.out.println("Двоичное число " + stringNumber + " равно десятичному числу " + toConvertBinaryInDecimal(stringNumber));
+                System.out.println("Двоичное число " + stringNumber + " равно шестнадцатеричному числу " + toConvertDecimalInHex(toConvertBinaryInDecimal(stringNumber)));
                 break;
             } else {
                 System.out.println("Число не соответствует условию ввода. Введите еще раз:");
@@ -36,7 +36,7 @@ public class UniversalConvertor {
         }
     }
 
-    public static String toDecimalHex(int decimalNumber) {  // метод конвертирует десятичное в шестнадцатеричное число
+    public static String toConvertDecimalInHex(int decimalNumber) {  // метод конвертирует десятичное в шестнадцатеричное число ( 0xDF0 3568)
         String hexadecimalNumberic = "";
         for (; decimalNumber > 0; decimalNumber = decimalNumber / 16) {
             switch (decimalNumber % 16) {
@@ -52,7 +52,7 @@ public class UniversalConvertor {
         return "0x" + hexadecimalNumberic;
     }
 
-    public static int toHexDecimal(String stringNumber) {  // метод конвертирует шестнадцатеричное в десятичное число
+    public static int toConvertHexInDecimal(String stringNumber) {  // метод конвертирует шестнадцатеричное в десятичное число
         int decimalNumber = 0;
         stringNumber=stringNumber.substring(2, stringNumber.length());  // отбрасываем "0x" от шестнадцатеричного числа
         int i = stringNumber.length();
@@ -72,7 +72,7 @@ public class UniversalConvertor {
         return decimalNumber;
     }
 
-    public static String toDecimalBinary(int decimalNumber) {
+    public static String toConvertDecimalInBinary(int decimalNumber) {
         String binaryNumber = "";
         for (; decimalNumber > 0; decimalNumber = decimalNumber / 2) { //
             binaryNumber = (decimalNumber % 2) + binaryNumber;          // от перемены мест влияет на порядок заполнение 0001 или 1000
@@ -80,7 +80,7 @@ public class UniversalConvertor {
         return binaryNumber;
     }
 
-    public static int toBinaryDecimal(String stringNumber) {
+    public static int toConvertBinaryInDecimal(String stringNumber) {
         int decimalNumber = 0;
         stringNumber = stringNumber.substring(2, stringNumber.length());
         int i = stringNumber.length();
@@ -91,7 +91,7 @@ public class UniversalConvertor {
         return decimalNumber;
     }
 
-    public static boolean hexDemTrue(String stringNumber) {  // метод проверяет ввод шестнадцатеричного числа
+    public static boolean isHexadecimalValid (String stringNumber) {
         if (!(stringNumber.startsWith("0x"))) {
             return false;
         }
@@ -109,7 +109,7 @@ public class UniversalConvertor {
         return true;
     }
 
-    public static boolean BinaryTrue(String stringNumber) {
+    public static boolean isBinaryValid(String stringNumber) {
         if (!(stringNumber.startsWith("0b"))) {
             return false;
         }
