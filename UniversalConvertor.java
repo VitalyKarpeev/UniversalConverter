@@ -36,7 +36,7 @@ public class UniversalConvertor {
         }
     }
 
-    public static String toConvertDecimalInHex(int decimalNumber) {  // метод конвертирует десятичное в шестнадцатеричное число ( 0xDF0 3568)
+    public static String toConvertDecimalInHex(int decimalNumber) {  // метод конвертирует десятичное в шестнадцатеричное число
         String hexadecimalNumberic = "";
         for (; decimalNumber > 0; decimalNumber = decimalNumber / 16) {
             switch (decimalNumber % 16) {
@@ -66,7 +66,7 @@ public class UniversalConvertor {
                 case 'E' -> decimalNumber += 14 * Math.pow(16, --i);
                 case 'F' -> decimalNumber += 15 * Math.pow(16, --i);
                 default ->
-                        decimalNumber += (int) (Character.getNumericValue(x) * Math.pow(10, --i)); // =(char --> int (1 * 2^i) i=i-1)
+                        decimalNumber += (int) (Character.getNumericValue(x) * Math.pow(16, --i)); // char --> int
             }
         }
         return decimalNumber;
@@ -74,7 +74,7 @@ public class UniversalConvertor {
 
     public static String toConvertDecimalInBinary(int decimalNumber) {
         String binaryNumber = "";
-        for (; decimalNumber > 0; decimalNumber = decimalNumber / 2) { //
+        for (; decimalNumber > 0; decimalNumber = decimalNumber / 2) { 
             binaryNumber = (decimalNumber % 2) + binaryNumber;          // от перемены мест влияет на порядок заполнение 0001 или 1000
         }
         return binaryNumber;
@@ -91,7 +91,7 @@ public class UniversalConvertor {
         return decimalNumber;
     }
 
-    public static boolean isHexadecimalValid (String stringNumber) {
+    public static boolean isHexadecimalValid (String stringNumber) {  //метод проверяет ввод шестнадцатеричного числа
         if (!(stringNumber.startsWith("0x"))) {
             return false;
         }
@@ -109,7 +109,7 @@ public class UniversalConvertor {
         return true;
     }
 
-    public static boolean isBinaryValid(String stringNumber) {
+    public static boolean isBinaryValid(String stringNumber) { //метод проверяет ввод двоичного числа
         if (!(stringNumber.startsWith("0b"))) {
             return false;
         }
